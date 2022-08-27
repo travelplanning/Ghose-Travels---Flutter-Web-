@@ -4,9 +4,12 @@ import 'package:ghose_travels/src/configs/appColors.dart';
 import 'package:ghose_travels/src/widgets/kText/kText.dart';
 
 
-primaryButton({
+Widget primaryButton({
   required buttonName,
   required void Function()? onTap,
+  double? height,
+  double? width,
+  IconData? icons,
 }) =>
     ElevatedButton(
       onPressed: onTap,
@@ -20,9 +23,24 @@ primaryButton({
           buttonColorBlue,
         ),
       ),
-      child: SizedBox(
-        height: 50,
-        width: Get.width,
+      child: icons!=null?Row(children: [
+
+        Icon(icons),
+        SizedBox(
+                  height: height == null ? 50 : height,
+                  width: width == null ? Get.width : width,
+                  child: Center(
+                    child: KText(
+                      text: buttonName,
+                      color: white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                )
+      ],) : SizedBox(
+        height:height==null? 50:height,
+        width:width==null?  Get.width:width,
         child: Center(
           child: KText(
             text: buttonName,

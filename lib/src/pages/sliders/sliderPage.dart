@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -10,8 +11,6 @@ import 'package:ghose_travels/src/components/slider/sliderComponent.dart';
 import 'package:ghose_travels/src/configs/appColors.dart';
 import 'package:ghose_travels/src/configs/appUtils.dart';
 import 'package:ghose_travels/src/controllers/BaseController/baseController.dart';
-import 'package:ghose_travels/src/models/sliders/sliderModel.dart';
-import 'package:ghose_travels/src/widgets/cachedNetworkImage/cachedNetworkImage.dart';
 import 'package:ghose_travels/src/widgets/card/customCardWidget.dart';
 import 'package:ghose_travels/src/widgets/kText/kText.dart';
 import 'package:image_picker/image_picker.dart';
@@ -155,9 +154,9 @@ class _SliderPageState extends State<SliderPage> with BaseController {
                         ],
                       ),
                       sizeH20,
-                      GestureDetector(
+                      InkWell(
                         onTap: () {
-        sliderC.sliderUrl.clear();
+                          sliderC.sliderUrl.clear();
 
                           sliderUrl();
                         },
@@ -189,69 +188,133 @@ class _SliderPageState extends State<SliderPage> with BaseController {
                         ],
                       ),
                       sizeH20,
-                      FutureBuilder(
-                          future: sliderC.getAllSlider(),
+                      StreamBuilder(
+                          stream: sliderC.getAllSlider(),
                           builder: (context,
-                              AsyncSnapshot<List<SliderModel>> snapshots) {
-                            switch (snapshots.connectionState) {
-                              case ConnectionState.none:
-                                break;
-                              case ConnectionState.waiting:
-                                return CircularProgressIndicator();
-                              case ConnectionState.active:
-                                break;
-                              case ConnectionState.done:
-                                return GridView.builder(
-                                  gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 3,
-                                    mainAxisSpacing: 10,
-                                    crossAxisSpacing: 10,
-                                    childAspectRatio: 2,
-                                  ),
-                                  shrinkWrap: true,
-                                  primary: false,
-                                  itemCount: snapshots.data!.length,
-                                  itemBuilder: (c, i) {
-                                    final item = snapshots.data![i];
-                                    return CustomCardWidget(
-                                      color: white,
-                                      borderRadius: BorderRadius.circular(5),
-                                      child: Stack(
-                                        children: [
-                                          ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            child: Image.network(
-                                              item.imageLink.toString(),
-                                              width: Get.width,
-                                              height: 200,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                          // CachedNetworkImageWidget(
-                                          //   imageUrl: item.imageLink,
-                                          // ),
-                                          Positioned(
-                                            right: 10,
-                                            top: 0,
-                                            child: IconButton(
-                                              onPressed: () {},
-                                              icon: Icon(
-                                                Icons.delete,
-                                                color: redAccent,
-                                                size: 30,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                );
+                              AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                                  snapshot) {
+                            if (!snapshot.hasData) {
+                              return Center(
+                                child: CircularProgressIndicator(),
+                              );
                             }
-                            return Container();
+
+                            return GridView.builder(
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                mainAxisSpacing: 10,
+                                crossAxisSpacing: 10,
+                                childAspectRatio: 2,
+                              ),
+                              shrinkWrap: true,
+                              itemCount: snapshot.data!.size,
+                              primary: false,
+                              itemBuilder: (BuildContext context, int index) {
+                                final items = snapshot.data!.docs[index].data();
+                                final id = snapshot.data!.docs[index].id;
+
+                                return CustomCardWidget(
+                                  color: white,
+                                  borderRadius: BorderRadius.circular(5),
+                                  child: Stack(
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(5),
+                                        child: Image.network(
+                                          items['campaignImage'].toString(),
+                                          width: Get.width,
+                                          height: 200,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      // CachedNetworkImageWidget(
+                                      //   imageUrl: item.imageLink,
+                                      // ),
+                                      Positioned(
+                                        right: 10,
+                                        top: 0,
+                                        child: IconButton(
+                                          onPressed: () => sliderC
+                                              .deleteSlider(id.toString()),
+                                          icon: Icon(
+                                            Icons.delete,
+                                            color: redAccent,
+                                            size: 30,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            );
                           }),
+                      // FutureBuilder(
+                      //     future: sliderC.getAllSlider(),
+                      //     builder: (context,
+                      //         AsyncSnapshot<List<SliderModel>> snapshots) {
+                      //       switch (snapshots.connectionState) {
+                      //         case ConnectionState.none:
+                      //           break;
+                      //         case ConnectionState.waiting:
+                      //           return CircularProgressIndicator();
+                      //         case ConnectionState.active:
+                      //           break;
+                      //         case ConnectionState.done:
+                      //           return GridView.builder(
+                      //             gridDelegate:
+                      //                 SliverGridDelegateWithFixedCrossAxisCount(
+                      //               crossAxisCount: 3,
+                      //               mainAxisSpacing: 10,
+                      //               crossAxisSpacing: 10,
+                      //               childAspectRatio: 2,
+                      //             ),
+                      //             shrinkWrap: true,
+                      //             primary: false,
+                      //             itemCount: snapshots.data!.length,
+                      //             itemBuilder: (c, i) {
+                      //               final item = snapshots.data![i];
+                      //               return CustomCardWidget(
+                      //                 color: white,
+                      //                 borderRadius: BorderRadius.circular(5),
+                      //                 child: Stack(
+                      //                   children: [
+                      //                     ClipRRect(
+                      //                       borderRadius:
+                      //                           BorderRadius.circular(5),
+                      //                       child: Image.network(
+                      //                         item.imageLink.toString(),
+                      //                         width: Get.width,
+                      //                         height: 200,
+                      //                         fit: BoxFit.cover,
+                      //                       ),
+                      //                     ),
+                      //                     // CachedNetworkImageWidget(
+                      //                     //   imageUrl: item.imageLink,
+                      //                     // ),
+                      //                     Positioned(
+                      //                       right: 10,
+                      //                       top: 0,
+                      //                       child: IconButton(
+                      //                         onPressed: () =>
+                      //                             sliderC.deleteSlider(
+                      //                                 item.id.toString()),
+                      //                         icon: Icon(
+                      //                           Icons.delete,
+                      //                           color: redAccent,
+                      //                           size: 30,
+                      //                         ),
+                      //                       ),
+                      //                     ),
+                      //                   ],
+                      //                 ),
+                      //               );
+                      //             },
+                      //           );
+                      //       }
+                      //       return Container();
+                      //     }),
                     ],
                   ),
                 ),
