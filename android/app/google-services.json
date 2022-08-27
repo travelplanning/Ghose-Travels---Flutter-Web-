@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "52934335830",
+    "project_id": "ghose-travels-beta",
+    "storage_bucket": "ghose-travels-beta.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:52934335830:android:b4ba4d3c36d6bfa780caf7",
+        "android_client_info": {
+          "package_name": "com.quicktech.ghose_travels"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "52934335830-kj0cq998kqapqjnuimb5tqtrn5jjd2h1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCffnCPleUH8kxHc4ZZVXayywsEo8lw6-Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "52934335830-kj0cq998kqapqjnuimb5tqtrn5jjd2h1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
