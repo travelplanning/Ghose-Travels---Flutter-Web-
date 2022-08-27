@@ -22,14 +22,4 @@ final paddingH10V10 = EdgeInsets.symmetric(horizontal: 10, vertical: 10);
 final borderRCircular5 = BorderRadius.circular(5);
 final borderRCircular10 = BorderRadius.circular(10);
 
-//
-
-final rubikRegular = 'Rubik-Regular';
-final rubikMedium = 'Rubik-Medium';
-final rubikSemiBold = 'Rubik-SemiBold';
-final rubikBold = 'Rubik-Bold';
-
-//
-
-final bengaliRegular = 'Bengali Regular';
-final bengaliMedium = 'Bengali Medium';
+ 

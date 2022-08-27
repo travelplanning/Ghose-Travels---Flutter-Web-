@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ghose_travels/src/configs/appColors.dart';
 import 'package:ghose_travels/src/configs/appUtils.dart';
+import 'package:ghose_travels/src/helpers/dividerWithText.dart';
 import 'package:ghose_travels/src/widgets/buttons/rowButton.dart';
 import 'package:ghose_travels/src/widgets/card/customCardWidget.dart';
 
@@ -13,7 +14,7 @@ class DrawerComponent {
     return customDrawer(context);
   }
 
-  customDrawer(context) {
+  customDrawer(context, {double? width}) {
     var size = MediaQuery.of(context).size;
 
     return CustomCardWidget(
@@ -21,7 +22,7 @@ class DrawerComponent {
       color: white,
       child: Container(
         height: size.height,
-        width: size.width / 5,
+        width: width ?? size.width / 5,
         color: Colors.white,
         child: ListView(
           shrinkWrap: true,
@@ -30,7 +31,8 @@ class DrawerComponent {
             FlutterLogo(
               size: 150,
             ),
-            Divider(),
+            sizeH10,
+            divider(),
             sizeH10,
             rowButton(
               onTap: () => Get.toNamed('/dashboard'),
@@ -39,14 +41,14 @@ class DrawerComponent {
             ),
             sizeH20,
             rowButton(
-              onTap: () {},
+              onTap: () => Get.offNamed('/brands'),
               icon: Icons.list_alt_outlined,
               text: 'Brands',
               arrowOn: true,
             ),
             sizeH20,
             rowButton(
-              onTap: () =>Get.toNamed('/vehiclesList'),
+              onTap: () => Get.toNamed('/vehiclesList'),
               icon: Icons.local_taxi_outlined,
               text: 'Vehicles',
               arrowOn: true,
@@ -57,15 +59,15 @@ class DrawerComponent {
               icon: Icons.bookmark_outline,
               text: 'Bookings',
             ),
+            // sizeH20,
+            // rowButton(
+            //   onTap: () {},
+            //   icon: Icons.campaign_outlined,
+            //   text: 'Campaigns',
+            // ),
             sizeH20,
             rowButton(
-              onTap: () {},
-              icon: Icons.campaign_outlined,
-              text: 'Campaigns',
-            ),
-            sizeH20,
-            rowButton(
-              onTap: () =>Get.offNamed('/sliders'),
+              onTap: () => Get.offNamed('/sliders'),
               icon: Icons.photo_library_outlined,
               text: 'Sliders',
             ),

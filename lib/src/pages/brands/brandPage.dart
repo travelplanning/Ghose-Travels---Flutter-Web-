@@ -14,18 +14,15 @@ import 'package:ghose_travels/src/widgets/kText/kText.dart';
 
 import '../../configs/appColors.dart';
 
-class VehiclesListPage extends StatefulWidget {
+class BrandPage extends StatefulWidget {
   @override
-  State<VehiclesListPage> createState() => _VehiclesListPageState();
+  State<BrandPage> createState() => _BrandPageState();
 }
 
-class _VehiclesListPageState extends State<VehiclesListPage>
-    with BaseController {
+class _BrandPageState extends State<BrandPage> with BaseController {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  var isAddVehicles = false;
-
-  var selectedBrandId = '';
+  var isAddBrands = false;
 
   Future<void> imageUrl() async {
     return showDialog<void>(
@@ -33,7 +30,7 @@ class _VehiclesListPageState extends State<VehiclesListPage>
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: KText(text: 'Car Image Url'),
+          title: KText(text: 'Brand Image Url'),
           content: SingleChildScrollView(
             child: ListBody(
               children: [
@@ -80,99 +77,12 @@ class _VehiclesListPageState extends State<VehiclesListPage>
     );
   }
 
-  Future<void> brandSelect() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: KText(
-            text: 'Brand List',
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-            color: black,
-          ),
-          content: Container(
-            height: Get.height / 2,
-            width: Get.width,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                divider(),
-                sizeH20,
-                StreamBuilder(
-                    stream: brandsC.getAllBrands(),
-                    builder: (context,
-                        AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                            snapshot) {
-                      if (!snapshot.hasData) {
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-
-                      return ListView.builder(
-                          shrinkWrap: true,
-                          primary: false,
-                          itemCount: snapshot.data!.size,
-                          itemBuilder: (c, i) {
-                            var item = snapshot.data!.docs[i].data();
-
-                            return CustomCardWidget(
-                              onTap: () {
-                                setState(() {
-                                  selectedBrandId = item['id'];
-                                  vehiclesC.brandNameTextC.text = item['name'];
-                                  Get.back();
-                                });
-                              },
-                              height: 60,
-                              width: Get.width,
-                              color: white,
-                              child: Padding(
-                                padding: EdgeInsets.all(10),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Image.network(item['image']),
-                                    sizeW20,
-                                    KText(
-                                      text: '${item['name']}',
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 18,
-                                    ),
-                                    Spacer(),
-                                    selectedBrandId == item['id']
-                                        ? CircleAvatar(
-                                          radius: 12,
-                                            child: Icon(
-                                              Icons.done,
-                                              size: 20,
-                                              color: white,
-                                            ),
-                                          )
-                                        : Container(),
-                                  ],
-                                ),
-                              ),
-                            );
-                          });
-                    }),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     SystemChrome.setApplicationSwitcherDescription(
         ApplicationSwitcherDescription(
-      label: 'Vehicles',
+      label: 'Brands',
       primaryColor: Theme.of(context).primaryColor.value,
     ));
     return Scaffold(
@@ -206,38 +116,35 @@ class _VehiclesListPageState extends State<VehiclesListPage>
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         primaryButton(
-                          icons:
-                              isAddVehicles == true ? Icons.close : Icons.add,
-                          buttonColor: isAddVehicles == true
-                              ? redAccent
-                              : buttonColorBlue,
-                          buttonName: isAddVehicles == true
-                              ? 'Close'
-                              : 'Add New Vehicles',
-                          onTap: isAddVehicles == true
+                          icons: isAddBrands == true ? Icons.close : Icons.add,
+                          buttonColor:
+                              isAddBrands == true ? redAccent : buttonColorBlue,
+                          buttonName:
+                              isAddBrands == true ? 'Close' : 'Add New Brands',
+                          onTap: isAddBrands == true
                               ? () {
                                   setState(() {
-                                    isAddVehicles = false;
+                                    isAddBrands = false;
                                   });
                                 }
                               : () {
                                   setState(() {
-                                    isAddVehicles = true;
+                                    isAddBrands = true;
                                   });
                                 },
-                          width: isAddVehicles == true
+                          width: isAddBrands == true
                               ? size.width / 5
                               : size.width < 900
                                   ? size.width / 2
                                   : size.width / 5,
                         ),
                         sizeW20,
-                        isAddVehicles == true
+                        isAddBrands == true
                             ? primaryButton(
                                 icons: Icons.save,
                                 buttonName: 'Save',
                                 onTap: () => vehiclesC.addNewVehicles(
-                                  brandId: selectedBrandId,
+                                  brandId: '9LTpmgrVcBCLneHI0YMY',
                                 ),
                                 width: size.width / 5,
                               )
@@ -246,13 +153,11 @@ class _VehiclesListPageState extends State<VehiclesListPage>
                     ),
                     sizeH20,
                     dividerWithText(
-                        title: isAddVehicles == true
-                            ? 'Add New Vehicles'
-                            : 'All Vehicles'),
+                        title: isAddBrands == true
+                            ? 'Add New Brands'
+                            : 'All Brands'),
                     sizeH20,
-                    isAddVehicles == true
-                        ? addVehiclesItem(size)
-                        : itemList(size),
+                    isAddBrands == true ? addBrandsItem(size) : itemList(size),
                   ],
                 ),
               ),
@@ -263,7 +168,7 @@ class _VehiclesListPageState extends State<VehiclesListPage>
     );
   }
 
-  addVehiclesItem(Size size) {
+  addBrandsItem(Size size) {
     return CustomCardWidget(
       color: white,
       child: Padding(
@@ -281,24 +186,6 @@ class _VehiclesListPageState extends State<VehiclesListPage>
             addFileButton(
               context,
               onTap: () => imageUrl(),
-            ),
-            sizeH20,
-            KText(
-              text: 'Brand Name',
-              fontWeight: FontWeight.bold,
-            ),
-            sizeH10,
-            customFormField(
-              controller: vehiclesC.brandNameTextC,
-              borderRadius: BorderRadius.circular(5),
-              readOnly: true,
-              isIconHide: true,
-              hintText: 'Select Brand Name',
-              suffixIcon: IconButton(
-                onPressed: () => brandSelect(),
-                icon: Icon(Icons.arrow_drop_down),
-              ),
-              textColor: black54,
             ),
             sizeH20,
             KText(
@@ -411,7 +298,7 @@ class _VehiclesListPageState extends State<VehiclesListPage>
 
   itemList(Size size) {
     return StreamBuilder(
-        stream: vehiclesC.getAllVehicles(),
+        stream: brandsC.getAllBrands(),
         builder: (context,
             AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
           if (!snapshot.hasData) {
@@ -446,7 +333,7 @@ class _VehiclesListPageState extends State<VehiclesListPage>
                         ClipRRect(
                           borderRadius: BorderRadius.circular(5),
                           child: Image.network(
-                            items['carImage'].toString(),
+                            items['image'].toString(),
                             width: size.width,
                             height: 200,
                             fit: BoxFit.cover,
@@ -487,9 +374,9 @@ class _VehiclesListPageState extends State<VehiclesListPage>
                     Padding(
                       padding: paddingH10,
                       child: KText(
-                        text: items['carName'] +
+                        text: items['name'] +
                             ' (' +
-                            items['modelYear'].toString() +
+                            items['brandOf'].toString() +
                             ')',
                         fontSize: 18,
                         maxLines: 1,

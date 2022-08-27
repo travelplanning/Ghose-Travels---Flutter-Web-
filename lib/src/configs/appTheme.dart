@@ -10,7 +10,7 @@ class AppTheme {
         color: black,
         size: 25,
       ),
-      backgroundColor: green,
+      backgroundColor: white,
     ),
   );
 }

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:ghose_travels/src/configs/appTheme.dart';
 import 'package:ghose_travels/src/controllers/BaseController/baseController.dart';
 import 'package:ghose_travels/src/pages/auth/loginPage.dart';
+import 'package:ghose_travels/src/pages/brands/brandPage.dart';
 import 'package:ghose_travels/src/pages/error/errorPage.dart';
 import 'package:ghose_travels/src/pages/sliders/sliderPage.dart';
 import 'package:ghose_travels/src/pages/vehicles/vehiclesListPage.dart';
@@ -26,6 +27,7 @@ class App extends StatelessWidget with BaseController {
         GetPage(name: '/login', page: () => LoginPage()),
         GetPage(name: '/sliders', page: () => SliderPage()),
         GetPage(name: '/vehiclesList', page: () => VehiclesListPage()),
+        GetPage(name: '/brands', page: () => BrandPage()),
       ],
     );
   }

@@ -110,11 +110,21 @@ class _SliderPageState extends State<SliderPage> with BaseController {
       key: _scaffoldKey,
       extendBody: true,
       backgroundColor: white,
+      appBar: size.width < 900
+          ? AppBar(
+              title: KText(text: 'Slider'),
+            )
+          : null,
+      drawer: size.width < 900
+          ? DrawerComponent().customDrawer(context, width: 300)
+          : null,
       body: Row(
         children: [
-          Container(
-            child: DrawerComponent().customDrawer(context),
-          ),
+          size.width < 900
+              ? SizedBox()
+              : Container(
+                  child: DrawerComponent().customDrawer(context),
+                ),
           Expanded(
             child: SingleChildScrollView(
               child: Container(
