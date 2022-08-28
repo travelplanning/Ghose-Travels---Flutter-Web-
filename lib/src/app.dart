@@ -3,8 +3,12 @@ import 'package:get/get.dart';
 import 'package:ghose_travels/src/configs/appTheme.dart';
 import 'package:ghose_travels/src/controllers/BaseController/baseController.dart';
 import 'package:ghose_travels/src/pages/auth/loginPage.dart';
+<<<<<<< HEAD
 import 'package:ghose_travels/src/pages/bookings/booking_details_screen.dart';
 import 'package:ghose_travels/src/pages/bookings/bookings_screen.dart';
+=======
+import 'package:ghose_travels/src/pages/brands/brandPage.dart';
+>>>>>>> e1819337018ad858d4accdc2dc7d0e343e3c1d03
 import 'package:ghose_travels/src/pages/error/errorPage.dart';
 import 'package:ghose_travels/src/pages/sliders/sliderPage.dart';
 import 'package:ghose_travels/src/pages/users/users_screen.dart';
@@ -31,9 +35,13 @@ class App extends StatelessWidget with BaseController {
         GetPage(name: '/login', page: () => LoginPage()),
         GetPage(name: '/sliders', page: () => SliderPage()),
         GetPage(name: '/vehiclesList', page: () => VehiclesListPage()),
+<<<<<<< HEAD
         GetPage(name: '/users', page: () => UsersScreen()),
         GetPage(name: '/bookings', page: () => BookingsScreen()),
         GetPage(name: '/booking_details', page: () => BookingDetailsScreen()),
+=======
+        GetPage(name: '/brands', page: () => BrandPage()),
+>>>>>>> e1819337018ad858d4accdc2dc7d0e343e3c1d03
       ],
     );
   }
