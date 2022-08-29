@@ -55,7 +55,7 @@ class DrawerComponent {
             ),
             sizeH20,
             rowButton(
-              onTap: () {},
+              onTap: () => Get.toNamed('/bookings'),
               icon: Icons.bookmark_outline,
               text: 'Bookings',
             ),
@@ -67,13 +67,22 @@ class DrawerComponent {
             // ),
             sizeH20,
             rowButton(
+<<<<<<< HEAD
+              onTap: () {},
+              icon: Icons.campaign_outlined,
+              text: 'Campaigns',
+            ),
+            sizeH20,
+            rowButton(
+=======
+>>>>>>> e1819337018ad858d4accdc2dc7d0e343e3c1d03
               onTap: () => Get.offNamed('/sliders'),
               icon: Icons.photo_library_outlined,
               text: 'Sliders',
             ),
             sizeH20,
             rowButton(
-              onTap: () {},
+              onTap: () => Get.toNamed('/users'),
               icon: Icons.person_outline,
               text: 'Users',
             ),

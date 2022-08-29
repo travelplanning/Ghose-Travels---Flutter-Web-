@@ -19,3 +19,6 @@ final black54 = Colors.black54;
 final black45 = Colors.black45;
 final redAccent = Colors.red;
 final blueGrey = Colors.blueGrey;
+
+Color themeColor = const Color(0xffb07b35);
+Color themeColorSecondary = const Color(0xffebbe5e);
