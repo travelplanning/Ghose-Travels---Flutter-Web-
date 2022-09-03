@@ -11,6 +11,7 @@ import 'package:ghose_travels/src/components/slider/sliderComponent.dart';
 import 'package:ghose_travels/src/configs/appColors.dart';
 import 'package:ghose_travels/src/configs/appUtils.dart';
 import 'package:ghose_travels/src/controllers/BaseController/baseController.dart';
+import 'package:ghose_travels/src/tests/image.dart';
 import 'package:ghose_travels/src/widgets/card/customCardWidget.dart';
 import 'package:ghose_travels/src/widgets/kText/kText.dart';
 import 'package:image_picker/image_picker.dart';
@@ -28,15 +29,19 @@ class _SliderPageState extends State<SliderPage> with BaseController {
   var isUploading = false;
 
   Future pickImageFromGallery() async {
+    print('abcd');
     PickedFile? pickedFile =
         await pickImage.getImage(source: ImageSource.gallery);
     setState(() {
       isUploading = true;
     });
     File imageFile = File(pickedFile!.path);
-
+    print(imageFile);
     if (imageFile.path.isNotEmpty) {
       selectedImage = imageFile;
+
+      print('object');
+
       Get.back();
     }
 
@@ -87,8 +92,11 @@ class _SliderPageState extends State<SliderPage> with BaseController {
             TextButton(
               child: KText(text: 'Add'),
               onPressed: () {
+
+                
                 sliderC.addNewSlider(
                   sliderImage: sliderC.sliderUrl.text,
+                  fileImage: selectedImage,
                 );
               },
             ),
@@ -136,21 +144,21 @@ class _SliderPageState extends State<SliderPage> with BaseController {
                     primary: false,
                     children: [
                       sizeH40,
-                      Row(
-                        children: [
-                          KText(text: 'Preview'),
-                          sizeW20,
-                          Expanded(
-                            child: Container(
-                              color: grey,
-                              height: 1,
-                            ),
-                          ),
-                        ],
-                      ),
-                      sizeH20,
-                      SliderComponent(),
-                      sizeH20,
+                      // Row(
+                      //   children: [
+                      //     KText(text: 'Preview'),
+                      //     sizeW20,
+                      //     Expanded(
+                      //       child: Container(
+                      //         color: grey,
+                      //         height: 1,
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      // sizeH20,
+                      // SliderComponent(),
+                      // sizeH20,
                       Row(
                         children: [
                           KText(text: 'Add New Slider'),
@@ -169,7 +177,10 @@ class _SliderPageState extends State<SliderPage> with BaseController {
                           sliderC.sliderUrl.clear();
 
                           sliderUrl();
+                          // pickImageFromGallery();
                         },
+
+                        // onTap: ()=>pickImageFromGallery(),
                         child: Container(
                           height: 200,
                           width: size.width,
@@ -231,13 +242,18 @@ class _SliderPageState extends State<SliderPage> with BaseController {
                                     children: [
                                       ClipRRect(
                                         borderRadius: BorderRadius.circular(5),
-                                        child: Image.network(
-                                          items['campaignImage'].toString(),
-                                          width: Get.width,
-                                          height: 200,
-                                          fit: BoxFit.cover,
-                                        ),
+                                        child: imageShow(
+                                            items['campaignImage'].toString()),
                                       ),
+                                      // ClipRRect(
+                                      // borderRadius: BorderRadius.circular(5),
+                                      //   child: Image.network(
+                                      //     items['campaignImage'].toString(),
+                                      //     width: Get.width,
+                                      //     height: 200,
+                                      //     fit: BoxFit.cover,
+                                      //   ),
+                                      // ),
                                       // CachedNetworkImageWidget(
                                       //   imageUrl: item.imageLink,
                                       // ),

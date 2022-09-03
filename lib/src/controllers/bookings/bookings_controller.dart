@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:ghose_travels/src/service/bookings/bookings_service.dart';
 
 class BookingsController extends GetxController {
-  var allBookings = <Map<String, dynamic>>[].obs;
+  var  allBookings = <Map<String, dynamic>>[].obs;
   var pendingBookings = <Map<String, dynamic>>[].obs;
   var confirmedBookings = <Map<String, dynamic>>[].obs;
   var cancelledBookings = <Map<String, dynamic>>[].obs;

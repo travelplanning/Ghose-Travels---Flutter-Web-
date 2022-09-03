@@ -31,12 +31,12 @@ class CustomCardWidget extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: onTap,
       child: Padding(
         padding: isPaddingOn == true ? paddingH10 : EdgeInsets.all(0),
         child: Card(
-          elevation: elevation == null ? 3 : elevation,
+          elevation: elevation == null ? 2 : elevation,
           shape: RoundedRectangleBorder(
             borderRadius: borderRadius != null
                 ? borderRadius as BorderRadiusGeometry

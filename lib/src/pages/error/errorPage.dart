@@ -1,9 +1,4 @@
-/*
-Author: QuickTech IT
-Author URI: http://quicktech-ltd.com;
-Description: QuickTech IT maintain standard quality for Website and Creative Design
-*/
-
+ 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';

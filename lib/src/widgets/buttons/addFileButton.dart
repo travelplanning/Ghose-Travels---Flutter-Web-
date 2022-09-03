@@ -6,6 +6,7 @@ addFileButton(
   required void Function()? onTap,
   double? height,
   double? width,
+  Widget? icon,
 }) {
   var size = MediaQuery.of(context).size;
   return InkWell(
@@ -17,11 +18,12 @@ addFileButton(
         border: Border.all(color: grey),
         borderRadius: BorderRadius.circular(5),
       ),
-      child: Icon(
-        Icons.add_a_photo_outlined,
-        size: 40,
-        color: grey,
-      ),
+      child: icon ??
+          Icon(
+            Icons.add_a_photo_outlined,
+            size: 40,
+            color: grey,
+          ),
     ),
   );
 }

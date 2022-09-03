@@ -18,7 +18,7 @@ class DrawerComponent {
     var size = MediaQuery.of(context).size;
 
     return CustomCardWidget(
-      elevation: 10,
+      elevation: 2,
       color: white,
       child: Container(
         height: size.height,
@@ -28,8 +28,9 @@ class DrawerComponent {
           shrinkWrap: true,
           primary: false,
           children: [
-            FlutterLogo(
-              size: 150,
+            Image.asset(
+              'assets/img/logo.png',
+              height: 150,
             ),
             sizeH10,
             divider(),
@@ -65,17 +66,9 @@ class DrawerComponent {
             //   icon: Icons.campaign_outlined,
             //   text: 'Campaigns',
             // ),
+
             sizeH20,
             rowButton(
-<<<<<<< HEAD
-              onTap: () {},
-              icon: Icons.campaign_outlined,
-              text: 'Campaigns',
-            ),
-            sizeH20,
-            rowButton(
-=======
->>>>>>> e1819337018ad858d4accdc2dc7d0e343e3c1d03
               onTap: () => Get.offNamed('/sliders'),
               icon: Icons.photo_library_outlined,
               text: 'Sliders',
@@ -86,13 +79,13 @@ class DrawerComponent {
               icon: Icons.person_outline,
               text: 'Users',
             ),
-            sizeH20,
-            rowButton(
-              onTap: () {},
-              icon: Icons.settings_outlined,
-              text: 'Settings',
-              arrowOn: true,
-            ),
+            // sizeH20,
+            // rowButton(
+            //   onTap: () {},
+            //   icon: Icons.settings_outlined,
+            //   text: 'Settings',
+            //   arrowOn: true,
+            // ),
             sizeH20,
             rowButton(
               onTap: () => Get.offAllNamed('/login'),

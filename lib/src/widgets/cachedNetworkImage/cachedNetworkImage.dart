@@ -1,8 +1,7 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
- 
+import 'package:ghose_travels/src/tests/image.dart';
 
 class CachedNetworkImageWidget extends StatelessWidget {
   String? imageUrl;
@@ -21,22 +20,23 @@ class CachedNetworkImageWidget extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-     
-    return   ClipRRect(
-            borderRadius: isImgCircular == true
-                ? BorderRadius.circular(10)
-                : BorderRadius.circular(5),
-            child: CachedNetworkImage(
-              imageUrl:   imageUrl.toString(),
-              height: height == null ? 50 : height,
-              width: width == null ? 50 : width,
-              fit: fit,
-              progressIndicatorBuilder: (context, url, downloadProgress) =>
-                  Center(
-                child: CircularProgressIndicator(),
-              ),
-              errorWidget: (context, url, error) => Icon(Icons.error),
-            ),
-          );
+    return ClipRRect(
+      borderRadius: isImgCircular == true
+          ? BorderRadius.circular(10)
+          : BorderRadius.circular(5),
+      child: imageShow(imageUrl.toString()),
+
+      //  CachedNetworkImage(
+      //   imageUrl:   imageUrl.toString(),
+      //   height: height == null ? 50 : height,
+      //   width: width == null ? 50 : width,
+      //   fit: fit,
+      //   progressIndicatorBuilder: (context, url, downloadProgress) =>
+      //       Center(
+      //     child: CircularProgressIndicator(),
+      //   ),
+      //   errorWidget: (context, url, error) => Icon(Icons.error),
+      // ),
+    );
   }
 }

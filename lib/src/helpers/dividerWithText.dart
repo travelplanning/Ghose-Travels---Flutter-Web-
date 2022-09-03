@@ -5,7 +5,7 @@ import 'package:ghose_travels/src/configs/appColors.dart';
 import 'package:ghose_travels/src/configs/apputils.dart';
 import 'package:ghose_travels/src/widgets/kText/kText.dart';
 
-dividerWithText({required title}) {
+Widget dividerWithText({required title}) {
   return Row(
     children: [
       KText(text: title),
@@ -20,10 +20,13 @@ dividerWithText({required title}) {
   );
 }
 
-divider() {
+Widget divider({
+  double? height,
+  double? width,
+}) {
   return Container(
     color: grey,
-    height: 1,
-    width: Get.width,
+    height:height?? 1,
+    width:width?? Get.width,
   );
 }
