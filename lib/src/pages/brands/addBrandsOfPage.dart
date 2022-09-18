@@ -171,8 +171,9 @@ class _BrandsOfPageState extends State<BrandsOfPage> with BaseController {
                                   ),
                                 ),
                                 IconButton(
-                                  onPressed: () =>
-                                      brandsC.removeBrandsOf(item['id']),
+                                  onPressed: () {
+                                    brandsC.removeBrandsOf(item['id']);
+                                  },
                                   icon: Icon(
                                     Icons.delete,
                                   ),

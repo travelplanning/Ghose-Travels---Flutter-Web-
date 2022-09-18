@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ghose_travels/src/configs/appColors.dart';
 
-addFileButton(
+Widget addFileButton(
   context, {
   required void Function()? onTap,
   double? height,

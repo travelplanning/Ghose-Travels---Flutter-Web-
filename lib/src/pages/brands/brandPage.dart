@@ -29,6 +29,7 @@ class _BrandPageState extends State<BrandPage> with BaseController {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       brandsC.clear();
+      carId = '';
     });
 
     super.initState();
@@ -111,10 +112,12 @@ class _BrandPageState extends State<BrandPage> with BaseController {
                                   onTap: vehiclesC.isUpdateVehicles.value ==
                                           true
                                       ? () {
-                                          vehiclesC.updateVehicles(carId);
+                                          vehiclesC.updateVehicles(carId,
+                                              fileUploadFirebaseC
+                                                  .selectedImage.value);
                                         }
                                       : () {
-                                          if (brandsC.brandImageTextC.text
+                                          if (fileUploadFirebaseC.selectedImage.value
                                                   .isNotEmpty &&
                                               brandsC.brandNameTextC.text
                                                   .isNotEmpty &&
@@ -122,15 +125,20 @@ class _BrandPageState extends State<BrandPage> with BaseController {
                                             if (brandsC.isAUpdateBrands.value ==
                                                 true) {
                                               brandsC.updateBrand(
-                                                  brandsC.brandId.value);
+                                                  brandsC.brandId.value,
+                                                  fileUploadFirebaseC
+                                                      .selectedImage.value);
                                             } else {
                                               print(
-                                                  brandsC.brandImageTextC.text);
+                                            fileUploadFirebaseC
+                                                  .selectedImage.value);
                                               print(
                                                   brandsC.brandNameTextC.text);
                                               print(brandsC.brandOfTextC.value);
                                               print(brandsC.brandOfId.value);
-                                              brandsC.addNewBrand();
+                                              brandsC.addNewBrand(
+                                                  fileUploadFirebaseC
+                                                      .selectedImage.value);
                                             }
                                           } else {
                                             emptySnackBarWidget();
@@ -211,10 +219,10 @@ class _BrandPageState extends State<BrandPage> with BaseController {
             sizeH10,
             addFileButton(
               context,
-              icon: brandsC.brandImageTextC.text.isNotEmpty
-                  ? Image.network(brandsC.brandImageTextC.text)
+              icon:  fileUploadFirebaseC.selectedImage.value.isNotEmpty
+                  ? Image.network(fileUploadFirebaseC.selectedImage.value)
                   : null,
-              onTap: () => imageUrl(),
+              onTap: () => fileUploadFirebaseC.pickImage(),
             ),
             sizeH20,
             KText(
@@ -296,7 +304,7 @@ class _BrandPageState extends State<BrandPage> with BaseController {
                 editOnTap: () {
                   setState(() {
                     brandsC.brandId.value = items['id'];
-                    brandsC.brandImageTextC.text = items['image'];
+                    fileUploadFirebaseC.selectedImage.value = items['image'];
                     brandsC.brandNameTextC.text = items['name'];
                     brandsC.brandOfTextC.text = items['brandOf'];
                     brandsC.brandOfId.value = items['brandOfId'];
@@ -373,7 +381,7 @@ class _BrandPageState extends State<BrandPage> with BaseController {
                                       carId = items['carId'];
                                       vehiclesC.carNameTextC.text =
                                           items['carName'];
-                                      vehiclesC.carImageTextC.text =
+                                     fileUploadFirebaseC.selectedImage.value =
                                           items['carImage'];
                                       vehiclesC.brandNameTextC.text =
                                           items['brandName'];
@@ -474,17 +482,19 @@ class _BrandPageState extends State<BrandPage> with BaseController {
               fontWeight: FontWeight.bold,
             ),
             sizeH10,
-            addFileButton(
-              context,
-              icon: vehiclesC.carImageTextC.text == ''
-                  ? null
-                  : Image.network(
-                      vehiclesC.carImageTextC.text,
-                      width: size.width,
-                      height: 200,
-                      fit: BoxFit.cover,
-                    ),
-              onTap: () => imageUrl(),
+            Obx(
+             ()=> addFileButton(
+                context,
+                icon: fileUploadFirebaseC.selectedImage.value == ''
+                    ? null
+                    : Image.network(
+                       fileUploadFirebaseC.selectedImage.value,
+                        width: size.width,
+                        height: 200,
+                        fit: BoxFit.cover,
+                      ),
+                onTap: () => fileUploadFirebaseC.pickImage(),
+              ),
             ),
             sizeH20,
             KText(
@@ -681,57 +691,7 @@ class _BrandPageState extends State<BrandPage> with BaseController {
     );
   }
 
-  Future<void> imageUrl() async {
-    return customDialogWidget(
-      context,
-      headerTitle: 'Add Image Url',
-      child: AlertDialog(
-        title: KText(text: 'Brand Image Url'),
-        content: SingleChildScrollView(
-          child: ListBody(
-            children: [
-              TextFormField(
-                controller: brandsC.brandImageTextC,
-                decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: black,
-                    ),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: black,
-                    ),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        actions: [
-          TextButton(
-            child: KText(text: 'Close'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          TextButton(
-            child: KText(text: 'Add'),
-            onPressed: () {
-              setState(() {
-                brandsC.brandImageTextC.text = brandsC.brandImageTextC.text;
-              });
-
-              Get.back();
-            },
-          ),
-        ],
-      ),
-    );
-  }
-
+  
   Future<void> brandOfSelect() async {
     return customDialogWidget(
       context,

@@ -1,36 +1,13 @@
-import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
-
 import 'package:get/get.dart';
 import 'package:ghose_travels/src/widgets/snackbar/snackbar.dart';
+import 'package:image_picker/image_picker.dart';
 
 class SliderController extends GetxController {
   final _firestore = FirebaseFirestore.instance;
-  var sliderUrl = TextEditingController();
-  addNewSlider({
-    required sliderImage,
-    required fileImage,
-  }) async {
-    try {
-      String id = _firestore.collection("campaigns").doc().id.toString();
-      await _firestore.collection("campaigns").doc(id).set({
-        'campaignImage': sliderImage,
-        'id': id,
-        'time': Timestamp.now(),
-      });
-
-      if (sliderImage != null) {
-        addSliderImage(fileImage);
-        Get.back();
-        snackBarWidget(message: 'Slider Added!', isRed: false);
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> getAllSlider() {
     return _firestore
@@ -56,36 +33,32 @@ class SliderController extends GetxController {
     }
   }
 
-  addSliderImage(File image) async {
-    File a = image;
-    try {
-      String nameImage = DateTime.now().millisecondsSinceEpoch.toString();
+  addSliderImage() async {
+    var image = await ImagePicker().pickImage(source: ImageSource.gallery);
 
-      var _reference =
-          FirebaseStorage.instance.ref().child('images/$nameImage.png}');
-      await _reference
-          .putData(
-        await a.readAsBytes(),
-        SettableMetadata(contentType: 'image/jpeg'),
-      )
-          .whenComplete(() async {
-        String id = _firestore.collection("campaigns").doc().id.toString();
+    if (image != null) {
+      Uint8List? uploadFile = await image.readAsBytes();
 
-        await _reference.getDownloadURL().then((value) {
-          sliderUrl.text = value;
-          print('____________________________>');
-          print(value);
-          print('____________________________>');
+      Reference reference = FirebaseStorage.instance.ref('sliders').child(image.name);
 
-          _firestore.collection('campaigns').add({
-            'campaignImage': value,
+      SettableMetadata settableMetadata = SettableMetadata(customMetadata: {});
+
+      final UploadTask uploadTask =
+          reference.putData(uploadFile, settableMetadata);
+
+      uploadTask.whenComplete(() async {
+        var downloadUrl = await uploadTask.snapshot.ref.getDownloadURL();
+
+        if (downloadUrl != '') {
+          String id = _firestore.collection("campaigns").doc().id.toString();
+          await _firestore.collection("campaigns").doc(id).set({
+            'campaignImage': downloadUrl,
             'id': id,
             'time': Timestamp.now(),
           });
-        });
+          snackBarWidget(message: 'Slider Added!', isRed: false);
+        }
       });
-    } catch (e) {
-      print(e);
     }
   }
 }

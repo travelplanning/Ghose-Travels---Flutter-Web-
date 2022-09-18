@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "52934335830",
-    "project_id": "ghose-travels-beta",
-    "storage_bucket": "ghose-travels-beta.appspot.com"
+    "project_number": "908223649178",
+    "project_id": "ghose-travels-ltd",
+    "storage_bucket": "ghose-travels-ltd.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:52934335830:android:b4ba4d3c36d6bfa780caf7",
+        "mobilesdk_app_id": "1:908223649178:android:75a73da6698e06a7781623",
         "android_client_info": {
-          "package_name": "com.quicktech.ghose_travels"
+          "package_name": "com.quicktech.ghose_travel_ltd"
         }
       },
       "oauth_client": [
         {
-          "client_id": "52934335830-kj0cq998kqapqjnuimb5tqtrn5jjd2h1.apps.googleusercontent.com",
+          "client_id": "908223649178-hl8de7fu0ik3ohcbhrmmid7976blj50h.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCffnCPleUH8kxHc4ZZVXayywsEo8lw6-Y"
+          "current_key": "AIzaSyA_A74W5ho3JmP_Nazqra1Krntq4-oaiHM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "52934335830-kj0cq998kqapqjnuimb5tqtrn5jjd2h1.apps.googleusercontent.com",
+              "client_id": "908223649178-hl8de7fu0ik3ohcbhrmmid7976blj50h.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

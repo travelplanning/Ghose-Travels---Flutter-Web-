@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ghose_travels/src/controllers/BaseController/baseController.dart';
 import 'package:ghose_travels/src/widgets/snackbar/snackbar.dart';
 
 class BrandsController extends GetxController {
@@ -18,14 +19,14 @@ class BrandsController extends GetxController {
   final brandOfId = RxString('');
 
   final brandNameTextC = TextEditingController();
-  final brandImageTextC = TextEditingController();
   final brandOfTextC = TextEditingController();
 
   final _firestore = FirebaseFirestore.instance;
   clear() {
-    brandImageTextC.clear();
+    var _ = BaseController();
     brandNameTextC.clear();
     brandOfTextC.clear();
+    _.fileUploadFirebaseC.selectedImage.value = '';
 
     brandId.value = '';
     brandOfId.value = '';
@@ -34,18 +35,18 @@ class BrandsController extends GetxController {
     isAUpdateBrands.value = false;
     isUpdateBrandsOff.value = false;
     isAddBrands.value = false;
-    // isVehicleEmpty.value = true;
+    isVehicleEmpty.value = true;
     isAddBrandsOff.value = false;
   }
 
-  addNewBrand() async {
+  addNewBrand(image) async {
     String id = _firestore.collection("brands").doc().id.toString();
 
     try {
       await _firestore.collection('brands').doc(id).set({
         'id': id,
         'name': brandNameTextC.text,
-        'image': brandImageTextC.text,
+        'image': image,
         'brandOf': brandOfTextC.text,
         'brandOfId': brandOfId.value,
         'time': Timestamp.now(),
@@ -66,11 +67,11 @@ class BrandsController extends GetxController {
     }
   }
 
-  updateBrand(brandId) async {
+  updateBrand(brandId, image) async {
     try {
       await _firestore.collection('brands').doc(brandId).update({
         'name': brandNameTextC.text,
-        'image': brandImageTextC.text,
+        'image': image,
         'brandOf': brandOfTextC.text,
         'brandOfId': brandOfId.value,
       });
@@ -92,7 +93,7 @@ class BrandsController extends GetxController {
     String id = _firestore.collection("brandsOf").doc().id.toString();
 
     try {
-      await _firestore.collection('brandsOf').add({
+      await _firestore.collection('brandsOf').doc(id).set({
         'id': id,
         'brandsOfName': brandOfTextC.text,
         'time': Timestamp.now(),
@@ -111,10 +112,12 @@ class BrandsController extends GetxController {
 
   updateBrandsOf() async {
     try {
-      await _firestore.collection('brandsOf').doc(brandOfId.value).update({
-        'brandsOfName': brandOfTextC.text,
-      });
-
+      await _firestore.collection('brandsOf').doc(brandOfId.value).set(
+        {
+          'brandsOfName': brandOfTextC.text,
+        },
+      );
+      print(brandOfId.value);
       if (brandOfId.value != '') {
         isFormEnable.value = false;
 
@@ -132,7 +135,7 @@ class BrandsController extends GetxController {
   removeBrandsOf(brandsOfId) async {
     try {
       await _firestore.collection('brandsOf').doc(brandsOfId).delete();
-
+      print(brandsOfId);
       if (brandsOfId != '') {
         snackBarWidget(
           message: 'Brands of removed!!',

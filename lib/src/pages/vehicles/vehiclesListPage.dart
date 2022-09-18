@@ -106,10 +106,12 @@ class _VehiclesListPageState extends State<VehiclesListPage>
                                             .isNotEmpty &&
                                         vehiclesC
                                             .brandNameTextC.text.isNotEmpty &&
-                                        vehiclesC
-                                            .carImageTextC.text.isNotEmpty &&
-                                        vehiclesC
-                                            .carImageTextC.text.isNotEmpty &&
+                                        fileUploadFirebaseC
+                                                .selectedImage.value !=
+                                            '' &&
+                                        fileUploadFirebaseC
+                                                .selectedImage.value !=
+                                            '' &&
                                         vehiclesC
                                             .carNameTextC.text.isNotEmpty &&
                                         vehiclesC
@@ -118,9 +120,14 @@ class _VehiclesListPageState extends State<VehiclesListPage>
                                             .modelYearTextC.text.isNotEmpty) {
                                       if (vehiclesC.isUpdateVehicles.value ==
                                           true) {
-                                        vehiclesC.updateVehicles(carId);
+                                        vehiclesC.updateVehicles(
+                                            carId,
+                                            fileUploadFirebaseC
+                                                .selectedImage.value);
                                       } else {
-                                        vehiclesC.addNewVehicles();
+                                        vehiclesC.addNewVehicles(
+                                            fileUploadFirebaseC
+                                                .selectedImage.value);
                                       }
                                     } else {
                                       emptySnackBarWidget();
@@ -168,15 +175,15 @@ class _VehiclesListPageState extends State<VehiclesListPage>
             sizeH10,
             addFileButton(
               context,
-              icon: vehiclesC.carImageTextC.text == ''
+              icon: fileUploadFirebaseC.selectedImage.value == ''
                   ? null
                   : Image.network(
-                      vehiclesC.carImageTextC.text,
+                      fileUploadFirebaseC.selectedImage.value,
                       width: size.width,
                       height: 200,
                       fit: BoxFit.cover,
                     ),
-              onTap: () => imageUrl(),
+              onTap: () => fileUploadFirebaseC.pickImage(),
             ),
             sizeH20,
             KText(
@@ -192,6 +199,24 @@ class _VehiclesListPageState extends State<VehiclesListPage>
               hintText: 'Select Brand Name',
               suffixIcon: IconButton(
                 onPressed: () => brandSelect(),
+                icon: Icon(Icons.arrow_drop_down),
+              ),
+              textColor: black54,
+            ),
+            sizeH20,
+            KText(
+              text: 'Brand Of Name',
+              fontWeight: FontWeight.bold,
+            ),
+            sizeH10,
+            customFormField(
+              controller: vehiclesC.brandOfName,
+              borderRadius: BorderRadius.circular(5),
+              readOnly: true,
+              isIconHide: true,
+              hintText: 'Select Brand Of Name',
+              suffixIcon: IconButton(
+                onPressed: () => brandOfSelect(),
                 icon: Icon(Icons.arrow_drop_down),
               ),
               textColor: black54,
@@ -331,140 +356,32 @@ class _VehiclesListPageState extends State<VehiclesListPage>
               final id = snapshot.data!.docs[index].id;
 
               return CustomGridCard(
-                onTap: (){},
+                onTap: () {},
                 editOnTap: () {
-                              setState(() {
-                                carId = items['carId'];
-                                vehiclesC.carNameTextC.text = items['carName'];
-                                vehiclesC.carImageTextC.text =
-                                    items['carImage'];
-                                vehiclesC.brandNameTextC.text =
-                                    items['brandName'];
-                                vehiclesC.carRentTextC.text =
-                                    items['carRent'].toString();
-                                vehiclesC.modelYearTextC.text =
-                                    items['modelYear'].toString();
-                                vehiclesC.advancedPayAmountTextC.text =
-                                    items['advancedPaymentAmount'].toString();
-                                vehiclesC.brandId.value = items['brandId'];
-                                vehiclesC.isAddVehicles.value = true;
-                                vehiclesC.isUpdateVehicles.value = true;
-                              });
-                            },
-                deleteOnTap:  () => vehiclesC.removeVehicles(id.toString()),
+                  setState(() {
+                    carId = items['carId'];
+                    vehiclesC.carNameTextC.text = items['carName'];
+                    fileUploadFirebaseC.selectedImage.value = items['carImage'];
+                    vehiclesC.brandNameTextC.text = items['brandName'];
+                    vehiclesC.carRentTextC.text = items['carRent'].toString();
+                    vehiclesC.modelYearTextC.text =
+                        items['modelYear'].toString();
+                    vehiclesC.advancedPayAmountTextC.text =
+                        items['advancedPaymentAmount'].toString();
+                    vehiclesC.brandId.value = items['brandId'];
+                    vehiclesC.isAddVehicles.value = true;
+                    vehiclesC.isUpdateVehicles.value = true;
+
+                    vehiclesC.brandOfId.text = items['brandsOfId'];
+                    vehiclesC.brandOfName.text = items['brandsOfName'];
+                  });
+                },
+                deleteOnTap: () => vehiclesC.removeVehicles(id.toString()),
                 title1: items['carName'],
                 title2: items['modelYear'],
                 dateTime: items['time'],
-                image:  items['carImage'],
+                image: items['carImage'],
               );
-
-              // CustomCardWidget(
-              //   color: white,
-              //   borderRadius: BorderRadius.circular(5),
-              //   child: Column(
-              //     mainAxisAlignment: MainAxisAlignment.start,
-              //     crossAxisAlignment: CrossAxisAlignment.start,
-              //     children: [
-              //       Stack(
-              //         children: [
-              //           ClipRRect(
-              //             borderRadius: BorderRadius.circular(5),
-              //             child: Image.network(
-              //               items['carImage'].toString(),
-              //               width: size.width,
-              //               height: 200,
-              //               fit: BoxFit.cover,
-              //             ),
-              //           ),
-              //           // CachedNetworkImageWidget(
-              //           //   imageUrl: item.imageLink,
-              //           // ),
-
-              //           Positioned(
-              //             left: 10,
-              //             top: 0,
-              //             child: IconButton(
-                            // onPressed: () {
-                            //   setState(() {
-                            //     carId = items['carId'];
-                            //     vehiclesC.carNameTextC.text = items['carName'];
-                            //     vehiclesC.carImageTextC.text =
-                            //         items['carImage'];
-                            //     vehiclesC.brandNameTextC.text =
-                            //         items['brandName'];
-                            //     vehiclesC.carRentTextC.text =
-                            //         items['carRent'].toString();
-                            //     vehiclesC.modelYearTextC.text =
-                            //         items['modelYear'].toString();
-                            //     vehiclesC.advancedPayAmountTextC.text =
-                            //         items['advancedPaymentAmount'].toString();
-                            //     vehiclesC.brandId.value = items['brandId'];
-                            //     vehiclesC.isAddVehicles.value = true;
-                            //     vehiclesC.isUpdateVehicles.value = true;
-                            //   });
-                            // },
-              //               icon: Icon(
-              //                 Icons.edit,
-              //                 color: buttonColorBlue,
-              //                 size: 30,
-              //               ),
-              //             ),
-              //           ),
-              //           Positioned(
-              //             right: 10,
-              //             top: 0,
-              //             child: IconButton(
-                            // onPressed: () =>
-                            //     vehiclesC.removeVehicles(id.toString()),
-              //               icon: Icon(
-              //                 Icons.delete,
-              //                 color: redAccent,
-              //                 size: 30,
-              //               ),
-              //             ),
-              //           ),
-              //         ],
-              //       ),
-              //       sizeH10,
-              //       Padding(
-              //         padding: paddingH10,
-              //         child: KText(
-              //           text: '${items['carName']} (${items['modelYear']})',
-              //           fontSize: 18,
-              //           maxLines: 1,
-              //           overflow: TextOverflow.ellipsis,
-              //           fontWeight: FontWeight.bold,
-              //         ),
-              //       ),
-              //       sizeH10,
-              //       Padding(
-              //         padding: paddingH10,
-              //         child: Row(
-              //           children: [
-              //             KText(
-              //               text: DateFormat.yMMMd()
-              //                   .format(items['time'].toDate()),
-              //               fontSize: 14,
-              //               maxLines: 1,
-              //               overflow: TextOverflow.ellipsis,
-              //               fontWeight: FontWeight.w600,
-              //             ),
-              //             Spacer(),
-              //             KText(
-              //               text: DateFormat.jm().format(
-              //                 items['time'].toDate(),
-              //               ),
-              //               fontSize: 14,
-              //               maxLines: 1,
-              //               overflow: TextOverflow.ellipsis,
-              //               fontWeight: FontWeight.w600,
-              //             ),
-              //           ],
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // );
             },
           );
         });
@@ -538,48 +455,87 @@ class _VehiclesListPageState extends State<VehiclesListPage>
     );
   }
 
-  Future<void> imageUrl() async {
+  Future<void> brandOfSelect() async {
     return customDialogWidget(
       context,
-      headerTitle: 'Car Image',
-      child: TextFormField(
-        controller: vehiclesC.carImageTextC,
-        onChanged: (val) {
-          setState(() {
-            vehiclesC.carImageTextC.text = val;
-          });
-        },
-        decoration: InputDecoration(
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: black,
-            ),
-            borderRadius: BorderRadius.circular(5),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: black,
-            ),
-            borderRadius: BorderRadius.circular(5),
-          ),
-        ),
-      ),
-      actions: [
-        TextButton(
-          child: KText(text: 'Close'),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        TextButton(
-          child: KText(text: 'Add'),
-          onPressed: () {
-            setState(() {
-              vehiclesC.carImageTextC.text = vehiclesC.carImageTextC.text;
-            });
+      headerTitle: 'Brand Of List',
+      child: StreamBuilder(
+          stream: brandsC.getAllBrandsOf(),
+          builder: (context,
+              AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+            if (!snapshot.hasData) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
 
-            Get.back();
+            return ListView.builder(
+                shrinkWrap: true,
+                primary: false,
+                itemCount: snapshot.data!.size,
+                itemBuilder: (c, i) {
+                  var item = snapshot.data!.docs[i].data();
+
+                  return CustomCardWidget(
+                    onTap: () {
+                      setState(() {
+                        vehiclesC.brandOfId.text = item['id'];
+                        vehiclesC.brandOfName.text = item['brandsOfName'];
+                        Get.back();
+                      });
+                    },
+                    height: 60,
+                    width: Get.width,
+                    color: white,
+                    child: Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          KText(
+                            text: '${item['brandsOfName']}',
+                            fontWeight: FontWeight.w600,
+                            fontSize: 18,
+                          ),
+                          Spacer(),
+                          vehiclesC.brandOfId.text == item['id']
+                              ? CircleAvatar(
+                                  radius: 12,
+                                  backgroundColor: green,
+                                  child: Icon(
+                                    Icons.done,
+                                    size: 20,
+                                    color: white,
+                                  ),
+                                )
+                              : Container(),
+                        ],
+                      ),
+                    ),
+                  );
+                });
+          }),
+      actions: [
+        TextButton.icon(
+          style: TextButton.styleFrom(
+            backgroundColor: buttonColorBlue,
+          ),
+          onPressed: () {
+            Get.toNamed('/brandsOf');
+            // setState(() {
+            //   brandsC.isAddBrandsOff.value = true;
+            // });
           },
+          icon: Icon(
+            Icons.add,
+            color: white,
+          ),
+          label: KText(
+            text: 'Add New Brand Of',
+            fontSize: 14,
+            color: white,
+          ),
         ),
       ],
     );

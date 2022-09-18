@@ -1,20 +1,17 @@
 // ignore_for_file: deprecated_member_use
 
-import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 import 'package:ghose_travels/src/components/home/drawerComponent.dart';
-import 'package:ghose_travels/src/components/slider/sliderComponent.dart';
+
 import 'package:ghose_travels/src/configs/appColors.dart';
 import 'package:ghose_travels/src/configs/appUtils.dart';
 import 'package:ghose_travels/src/controllers/BaseController/baseController.dart';
 import 'package:ghose_travels/src/tests/image.dart';
 import 'package:ghose_travels/src/widgets/card/customCardWidget.dart';
 import 'package:ghose_travels/src/widgets/kText/kText.dart';
-import 'package:image_picker/image_picker.dart';
 
 class SliderPage extends StatefulWidget {
   @override
@@ -22,90 +19,9 @@ class SliderPage extends StatefulWidget {
 }
 
 class _SliderPageState extends State<SliderPage> with BaseController {
-  var selectedImage;
-
-  // File? image;
-  final pickImage = ImagePicker();
-  var isUploading = false;
-
-  Future pickImageFromGallery() async {
-    print('abcd');
-    PickedFile? pickedFile =
-        await pickImage.getImage(source: ImageSource.gallery);
-    setState(() {
-      isUploading = true;
-    });
-    File imageFile = File(pickedFile!.path);
-    print(imageFile);
-    if (imageFile.path.isNotEmpty) {
-      selectedImage = imageFile;
-
-      print('object');
-
-      Get.back();
-    }
-
-    setState(() {
-      isUploading = false;
-    });
-  }
-
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  Future<void> sliderUrl() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: KText(text: 'Slider Image Url'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: [
-                TextFormField(
-                  controller: sliderC.sliderUrl,
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: black,
-                      ),
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: black,
-                      ),
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          actions: [
-            TextButton(
-              child: KText(text: 'Close'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              child: KText(text: 'Add'),
-              onPressed: () {
-
-                
-                sliderC.addNewSlider(
-                  sliderImage: sliderC.sliderUrl.text,
-                  fileImage: selectedImage,
-                );
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
+ 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -174,9 +90,11 @@ class _SliderPageState extends State<SliderPage> with BaseController {
                       sizeH20,
                       InkWell(
                         onTap: () {
-                          sliderC.sliderUrl.clear();
-
-                          sliderUrl();
+                       
+                            sliderC.addSliderImage(
+                               );
+                         
+                          // sliderUrl();
                           // pickImageFromGallery();
                         },
 

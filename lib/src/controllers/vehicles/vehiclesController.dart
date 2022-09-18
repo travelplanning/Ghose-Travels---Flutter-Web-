@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:ghose_travels/src/controllers/BaseController/baseController.dart';
 import 'package:ghose_travels/src/widgets/snackbar/snackbar.dart';
 
 class VehiclesController extends GetxController {
@@ -10,7 +11,11 @@ class VehiclesController extends GetxController {
   final brandNameTextC = TextEditingController();
   final carRentTextC = TextEditingController();
   final modelYearTextC = TextEditingController();
-  final carImageTextC = TextEditingController();
+
+  //<-- for brandsOff -->
+  final brandOfId = TextEditingController();
+  final brandOfName = TextEditingController();
+
   final advancedPayAmountTextC = TextEditingController();
 
   var isAddVehicles = RxBool(false);
@@ -18,17 +23,19 @@ class VehiclesController extends GetxController {
 //brand Id
   var brandId = RxString('');
 
-  clear() {
+  clear() async {
+    var _ = BaseController();
     carNameTextC.clear();
-    carImageTextC.clear();
     brandNameTextC.clear();
     carRentTextC.clear();
     modelYearTextC.clear();
-
+    brandOfId.clear();
+    brandOfName.clear();
+    _.fileUploadFirebaseC.selectedImage.value = '';
     advancedPayAmountTextC.clear();
   }
 
-  addNewVehicles() async {
+  addNewVehicles(String? image) async {
     String id = _firestore.collection("vehicles").doc().id.toString();
     try {
       await _firestore.collection('vehicles').doc(id).set({
@@ -36,18 +43,19 @@ class VehiclesController extends GetxController {
         'carRent': carRentTextC.text,
         'modelYear': modelYearTextC.text,
         'advancedPaymentAmount': advancedPayAmountTextC.text,
-        'carImage': carImageTextC.text,
         'brandId': brandId.value,
         'brandName': brandNameTextC.text,
         'carId': id,
+        'carImage': image,
         'search': setSearchParamForforVehicles(carNameTextC.text),
+        'brandsOfName': brandOfName.text,
+        'brandsOfId': brandOfId.text,
         'time': Timestamp.now(),
       });
 
-      if (carImageTextC.text.isNotEmpty &&
+      if (image!.isNotEmpty &&
           carRentTextC.text.isNotEmpty &&
           modelYearTextC.text.isNotEmpty &&
-          carImageTextC.text.isNotEmpty &&
           advancedPayAmountTextC.text.isNotEmpty) {
         Get.back();
         isUpdateVehicles.value = false;
@@ -61,27 +69,30 @@ class VehiclesController extends GetxController {
     }
   }
 
-  updateVehicles(id) async {
+  updateVehicles(id, String? image) async {
     try {
       await _firestore.collection('vehicles').doc(id).update({
         'carName': carNameTextC.text,
         'carRent': carRentTextC.text,
         'modelYear': modelYearTextC.text,
         'advancedPaymentAmount': advancedPayAmountTextC.text,
-        'carImage': carImageTextC.text,
+        'carImage': image,
         'brandId': brandId.value,
         'carId': id,
+        'brandsOfName': brandOfName.text,
+        'brandsOfId': brandOfId.text,
         'search': setSearchParamForforVehicles(carNameTextC.text),
       });
 
-      if (carImageTextC.text.isNotEmpty &&
+      if (image!.isNotEmpty &&
           carRentTextC.text.isNotEmpty &&
           modelYearTextC.text.isNotEmpty &&
-          carImageTextC.text.isNotEmpty &&
           advancedPayAmountTextC.text.isNotEmpty) {
         Get.back();
         isUpdateVehicles.value = false;
         isAddVehicles.value = false;
+        clear();
+
         snackBarWidget(message: 'Car Updated!', isRed: false);
       }
     } catch (e) {
