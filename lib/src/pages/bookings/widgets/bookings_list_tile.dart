@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ghose_travels/src/configs/appColors.dart';
 import 'package:ghose_travels/src/controllers/BaseController/baseController.dart';
+import 'package:ghose_travels/src/widgets/kText/kText.dart';
 
 class BookingsListTile extends StatelessWidget with BaseController {
   BookingsListTile({
@@ -40,10 +41,11 @@ class BookingsListTile extends StatelessWidget with BaseController {
           title: Text(customerName),
           subtitle: Text("To : $customerDestination"),
           trailing: SizedBox(
-            width: width * 7,
+            width: 90,
             child: Row(
               children: [
-                Text("$status"),
+               
+                KText(text: "$status".toUpperCase(),fontSize: 12,),
                 Spacer(),
                 Icon(Icons.arrow_forward_ios),
               ],

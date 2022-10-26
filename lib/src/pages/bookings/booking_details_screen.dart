@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,6 +6,7 @@ import 'package:ghose_travels/src/components/round_button_widget.dart';
 import 'package:ghose_travels/src/configs/appColors.dart';
 import 'package:ghose_travels/src/controllers/BaseController/baseController.dart';
 import 'package:ghose_travels/src/service/bookings/change_booking_status_service.dart';
+import 'package:ghose_travels/src/widgets/kText/kText.dart';
 import 'package:ghose_travels/src/widgets/white_space/horizontal_space.dart';
 import 'package:ghose_travels/src/widgets/white_space/vertical_space.dart';
 
@@ -20,17 +20,37 @@ class BookingDetailsScreen extends StatelessWidget with BaseController {
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height / 100;
     var width = MediaQuery.of(context).size.width / 100;
+    var size = MediaQuery.of(context).size;
+
     return Scaffold(
+      appBar: size.width < 900
+          ? AppBar(
+              title: KText(text: 'Bokking Details'),
+            )
+          : null,
+      drawer: size.width < 900
+          ? DrawerComponent().customDrawer(context, width: 300)
+          : null,
       body: Row(
         children: [
-          Container(
-            child: DrawerComponent().customDrawer(context),
-          ),
-          HorizontalSpace(width: width * 5),
+          size.width < 900
+              ? SizedBox()
+              : Container(
+                  child: DrawerComponent().customDrawer(context),
+                ),
+          // HorizontalSpace(width: width * 5),
           Obx(() {
             // log("this is doc id ${bookingsController.tempDocId.value}");
             return Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                IconButton(
+                  onPressed: () => Get.back(),
+                  icon: Icon(
+                    Icons.arrow_back,
+                  ),
+                ),
                 SizedBox(
                   width: width * 40,
                   child: FutureBuilder<DocumentSnapshot>(

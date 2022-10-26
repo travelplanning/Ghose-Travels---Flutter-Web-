@@ -8,13 +8,14 @@ void main() async {
 
    await Firebase.initializeApp(
     options: FirebaseOptions(
-        apiKey: 'AIzaSyA_A74W5ho3JmP_Nazqra1Krntq4-oaiHM',
-      appId: '1:908223649178:android:75a73da6698e06a7781623',
-      messagingSenderId: '908223649178',
-      projectId: 'ghose-travels-ltd',
-      storageBucket: 'ghose-travels-ltd.appspot.com',
+        apiKey: 'AIzaSyCffnCPleUH8kxHc4ZZVXayywsEo8lw6-Y',
+      appId: '1:52934335830:android:da849a9f5a2dc0d380caf7',
+      messagingSenderId: '52934335830',
+      projectId: 'ghose-travels-beta',
+      storageBucket: 'ghose-travels-beta.appspot.com',
     ),
   );
   runApp(App());
 }
 
+ 

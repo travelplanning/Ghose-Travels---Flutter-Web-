@@ -9,7 +9,7 @@ import 'package:ghose_travels/src/components/home/drawerComponent.dart';
 import 'package:ghose_travels/src/configs/appColors.dart';
 import 'package:ghose_travels/src/configs/appUtils.dart';
 import 'package:ghose_travels/src/controllers/BaseController/baseController.dart';
-import 'package:ghose_travels/src/tests/image.dart';
+import 'package:ghose_travels/src/widgets/cachedNetworkImage/image.dart';
 import 'package:ghose_travels/src/widgets/card/customCardWidget.dart';
 import 'package:ghose_travels/src/widgets/kText/kText.dart';
 

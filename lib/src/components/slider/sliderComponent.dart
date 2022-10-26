@@ -4,7 +4,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:ghose_travels/src/controllers/BaseController/baseController.dart';
-import 'package:ghose_travels/src/tests/image.dart';
 import 'package:ghose_travels/src/widgets/card/customCardWidget.dart';
 
 import '../../configs/appColors.dart';
@@ -41,7 +40,7 @@ class SliderComponent extends StatelessWidget with BaseController {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(5),
 
-                      child: imageShow(item.toString()),
+                      child:Image.network(item.toString()),
                       // child: Image.network(
                       //   item['campaignImage'],
                       // ),

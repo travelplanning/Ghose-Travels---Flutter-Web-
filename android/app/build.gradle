@@ -45,7 +45,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.quicktech.ghose_travels"
+        applicationId "com.quicktechit.ghose_travels_and_tours"
   
         minSdkVersion 19
         targetSdkVersion flutter.targetSdkVersion

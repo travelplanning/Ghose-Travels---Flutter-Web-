@@ -26,8 +26,9 @@ class BookingsInfoContainer extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(15),
         margin: EdgeInsets.all(7),
-        height: height * 17,
-        width: width * 10,
+        height: 100,
+        // width: width * 10,
+        width: 100,
         decoration: BoxDecoration(
           color: Colors.grey[350],
           borderRadius: BorderRadius.circular(10),
@@ -37,14 +38,16 @@ class BookingsInfoContainer extends StatelessWidget {
           children: [
             Text(
               number,
+              textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 35,
+                fontSize: 20,
               ),
             ),
             Text(
               categoryName,
+              textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 17,
+                fontSize: 12,
               ),
             ),
           ],

@@ -1,7 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:ghose_travels/src/tests/image.dart';
+import 'package:ghose_travels/src/widgets/cachedNetworkImage/image.dart';
 
 class CachedNetworkImageWidget extends StatelessWidget {
   String? imageUrl;

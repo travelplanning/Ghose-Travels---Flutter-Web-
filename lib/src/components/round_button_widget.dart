@@ -31,6 +31,7 @@ class RoundButtonWidget extends StatelessWidget {
           icon,
         ),
         style: OutlinedButton.styleFrom(
+          // ignore: deprecated_member_use
           primary: Colors.white,
           backgroundColor: backgroundColor,
           shape: const StadiumBorder(),
